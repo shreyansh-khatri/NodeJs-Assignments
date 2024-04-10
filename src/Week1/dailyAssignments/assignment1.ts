@@ -3,29 +3,32 @@ const {
   task2Message,
 }: { task1Message: string; task2Message: string } = require("../utils.ts");
 
-async function task1(): Promise<string> {
-  return new Promise((resolve) => {
+const task1 = async (): Promise<string> => {
+  const task1Message = await new Promise<string>((resolve) => {
     setTimeout(() => {
-      console.log(task1Message);
-      resolve(task1Message);
+      const message = "Task 1 completed";
+      console.log(message);
+      resolve(message);
     }, 2000);
   });
-}
+  return task1Message;
+};
 
-async function task2(): Promise<string> {
-  return new Promise((resolve) => {
+const task2 = async (): Promise<string> => {
+  const task2Message = await new Promise<string>((resolve) => {
     setTimeout(() => {
-      console.log(task2Message);
-      resolve(task2Message);
+      const message = "Task 2 completed";
+      console.log(message);
+      resolve(message);
     }, 3000);
   });
-}
+  return task2Message;
+};
 
-async function main() {
+const main = async () => {
   try {
     const result1 = await task1();
     const result2 = await task2();
-
     setTimeout(() => {
       console.log("Result from Task 1:", result1);
       console.log("Result from Task 2:", result2);
@@ -33,6 +36,6 @@ async function main() {
   } catch (error) {
     console.error("Error:", error);
   }
-}
+};
 
 main();

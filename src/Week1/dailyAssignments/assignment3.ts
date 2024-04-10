@@ -1,5 +1,11 @@
 import express, { Request, Response } from "express";
 import Joi from "joi";
+
+interface Brand {
+  id: number;
+  name: string;
+}
+
 const {
   alreadyExists,
   notFound,
@@ -13,11 +19,12 @@ const {
   portMessage: string;
   deleteMessage: string;
 } = require("../utils.ts");
+
 const app = express();
 app.use(express.json());
 const PORT: number = parseInt(process.env.PORT || "3000");
 
-const brands = [
+const brands: Brand[] = [
   { id: 1, name: "Apple" },
   { id: 2, name: "Samsung" },
   { id: 3, name: "Xiomi" },
@@ -44,7 +51,7 @@ app.post("/api/brands/", (req: Request, res: Response) => {
   if (error) {
     res.status(400).send(error.details[0].message);
   } else {
-    const brand = {
+    const brand: Brand = {
       id: brands.length + 1,
       name: value.name,
     };
