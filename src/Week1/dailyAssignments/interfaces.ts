@@ -10,3 +10,8 @@ export interface ErrorMessages {
   portMessage: string;
   deleteMessage: string;
 };
+
+export interface TaskMessages {
+  task1Message: string;
+  task2Message: string;
+}

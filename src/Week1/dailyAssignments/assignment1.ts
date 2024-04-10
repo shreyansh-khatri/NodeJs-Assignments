@@ -1,28 +1,22 @@
-const {
-  task1Message,
-  task2Message,
-}: { task1Message: string; task2Message: string } = require("../utils.ts");
+import { TaskMessages } from "./interfaces";
+const { task1Message, task2Message }: TaskMessages = require("../utils.ts");
 
 const task1 = async (): Promise<string> => {
-  const task1Message = await new Promise<string>((resolve) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      const message = "Task 1 completed";
-      console.log(message);
-      resolve(message);
+      console.log(task1Message);
+      resolve(task1Message);
     }, 2000);
   });
-  return task1Message;
 };
 
 const task2 = async (): Promise<string> => {
-  const task2Message = await new Promise<string>((resolve) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      const message = "Task 2 completed";
-      console.log(message);
-      resolve(message);
+      console.log(task2Message);
+      resolve(task2Message);
     }, 3000);
   });
-  return task2Message;
 };
 
 const main = async () => {
