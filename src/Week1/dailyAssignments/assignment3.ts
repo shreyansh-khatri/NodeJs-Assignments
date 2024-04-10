@@ -1,18 +1,7 @@
 import express, { Request, Response } from "express";
 import Joi from "joi";
-
-interface Brand {
-  id: number;
-  name: string;
-}
-
-type ErrorMessages = {
-  alreadyExists: string;
-  notFound: string;
-  invalidId: string;
-  portMessage: string;
-  deleteMessage: string;
-};
+import { Brand,ErrorMessages } from "./interfaces";
+import { brands } from "../utils";
 
 const {
   alreadyExists,
@@ -25,12 +14,6 @@ const {
 const app = express();
 app.use(express.json());
 const PORT: number = parseInt(process.env.PORT || "3000");
-
-const brands: Brand[] = [
-  { id: 1, name: "Apple" },
-  { id: 2, name: "Samsung" },
-  { id: 3, name: "Xiomi" },
-];
 
 app.listen(PORT, () => {
   console.log(`${portMessage} ${PORT}`);

@@ -1,9 +1,7 @@
 import express from "express";
 import { promises as fs } from "fs";
-const {
-  errorMessage,
-  portMessage,
-}: { errorMessage: string; portMessage: string } = require("../utils.ts");
+import { Messages } from "./interfaces";
+const { errorMessage, portMessage }: Messages = require("../utils.ts");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const FILE_PATH = "data.json";

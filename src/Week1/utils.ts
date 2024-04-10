@@ -1,3 +1,4 @@
+import { Brand } from "./dailyAssignments/interfaces";
 const notFound: string = "Item not found";
 const alreadyExists: string = "This brand already exists";
 const task1Message: string = "Task 1 completed";
@@ -19,4 +20,11 @@ export {
   portMessage,
   deleteMessage,
 };
+
+export const brands: Brand[] = [
+  { id: 1, name: "Apple" },
+  { id: 2, name: "Samsung" },
+  { id: 3, name: "Xiomi" },
+];
+
 
