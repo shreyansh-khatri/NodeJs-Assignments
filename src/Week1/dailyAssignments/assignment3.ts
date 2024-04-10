@@ -6,19 +6,21 @@ interface Brand {
   name: string;
 }
 
+type ErrorMessages = {
+  alreadyExists: string;
+  notFound: string;
+  invalidId: string;
+  portMessage: string;
+  deleteMessage: string;
+};
+
 const {
   alreadyExists,
   notFound,
   invalidId,
   portMessage,
   deleteMessage,
-}: {
-  alreadyExists: string;
-  notFound: string;
-  invalidId: string;
-  portMessage: string;
-  deleteMessage: string;
-} = require("../utils.ts");
+}: ErrorMessages = require("../utils.ts");
 
 const app = express();
 app.use(express.json());
@@ -81,14 +83,14 @@ app.delete("/api/brands/:id", (req: Request, res: Response) => {
   res.send(deleteMessage);
 });
 
-const validateBrand = (brand: { name: string }) => {
+const validateBrand = (brand: { name: string }): Joi.ValidationResult => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
   });
   return schema.validate(brand);
 };
 
-const findBrand = (brandId: number) => {
+const findBrand = (brandId: number): Brand => {
   const brand = brands.find((item) => item.id === brandId);
-  return brand;
+  return brand!;
 };
