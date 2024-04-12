@@ -1,10 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { DecodedToken,ActiveSessions,users,LoginInfo,AuthenticatedRequest } from "./utils";
+import { DecodedToken,ActiveSessions,users,LoginInfo,AuthenticatedRequest,SECRET_KEY } from "./utils";
 
 const app = express();
 const PORT: number | string = process.env.PORT || 3000;
-const secretKey: string = "yourSecretKey";
 const activeSessions: ActiveSessions = {};
 app.use(express.json());
 
@@ -19,7 +18,7 @@ const authenticate = (
   const token: string = req.headers.authorization.split(" ")[1];
 
   try {
-    const decoded: DecodedToken = jwt.verify(token, secretKey) as DecodedToken;
+    const decoded: DecodedToken = jwt.verify(token, SECRET_KEY) as DecodedToken;
     if (activeSessions[decoded.username] !== token) {
       return res.status(401).json({ error: "Invalid session" });
     }
@@ -34,8 +33,7 @@ const authenticate = (
 const errorHandler = (
   err: Error,
   req: Request,
-  res: Response,
-  next: NextFunction
+  res: Response
 ): void => {
   console.error(err.stack);
   res.status(500).json({ error: "Internal Server Error" });
@@ -53,7 +51,7 @@ app.post("/login", (req: Request, res: Response): void => {
     if (activeSessions[username]) {
       res.status(409).json({ error: "User already logged in" });
     }
-    const token: string = jwt.sign({ username }, secretKey);
+    const token: string = jwt.sign({ username }, SECRET_KEY);
     activeSessions[username] = token; 
     res.json({ token });
   } else {

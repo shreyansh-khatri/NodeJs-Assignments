@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export interface DecodedToken {
   username: string;
 }
@@ -40,7 +42,8 @@ export interface LoginInfo {
   password: string;
 }
 
-import { Request } from "express";
 export interface AuthenticatedRequest extends Request {
   user?: DecodedToken;
 }
+
+export const SECRET_KEY = "yourSecretKey";
