@@ -1,6 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { DecodedToken,ActiveSessions,users,LoginInfo,AuthenticatedRequest,SECRET_KEY } from "./utils";
+import {
+  DecodedToken,
+  ActiveSessions,
+  users,
+  LoginInfo,
+  AuthenticatedRequest,
+  SECRET_KEY,
+} from "./utils";
 
 const app = express();
 const PORT: number | string = process.env.PORT || 3000;
@@ -30,15 +37,10 @@ const authenticate = (
   }
 };
 
-const errorHandler = (
-  err: Error,
-  req: Request,
-  res: Response
-): void => {
+const errorHandler = (err: Error, req: Request, res: Response): void => {
   console.error(err.stack);
   res.status(500).json({ error: "Internal Server Error" });
 };
-
 
 app.post("/login", (req: Request, res: Response): void => {
   const { username, password }: LoginInfo = req.body;
@@ -52,7 +54,7 @@ app.post("/login", (req: Request, res: Response): void => {
       res.status(409).json({ error: "User already logged in" });
     }
     const token: string = jwt.sign({ username }, SECRET_KEY);
-    activeSessions[username] = token; 
+    activeSessions[username] = token;
     res.json({ token });
   } else {
     res.status(401).json({ error: "Invalid username or password" });
@@ -69,7 +71,7 @@ app.post(
     }
     const { username }: DecodedToken = req.user;
     delete activeSessions[username];
-    res.clearCookie("jwt"); 
+    res.clearCookie("jwt");
     res.json({ message: "Logged out successfully" });
   }
 );
