@@ -19,7 +19,7 @@ const task2 = async (): Promise<string> => {
   });
 };
 
-const main = async () => {
+const main = async (): Promise<void> => {
   try {
     const result1 = await task1();
     const result2 = await task2();
