@@ -5,12 +5,13 @@ import {
   ActiveSessions,
   users,
   LoginInfo,
-  AuthenticatedRequest,
-  SECRET_KEY,
+  AuthenticatedRequest
 } from "./utils";
+require("dotenv").config();
 
 const app = express();
 const PORT: number | string = process.env.PORT || 3000;
+const SECRET_KEY: string = process.env.SECRET!;
 const activeSessions: ActiveSessions = {};
 app.use(express.json());
 
@@ -84,7 +85,6 @@ app.get(
       res.status(401).json({ error: "User not authenticated" });
       return;
     }
-    const { username }: DecodedToken = req.user;
     res.json({ message: "Protected endpoint accessed" });
   }
 );
